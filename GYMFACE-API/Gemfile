@@ -6,6 +6,10 @@ git_source(:github) do |repo_name|
 end
 
 
+# For scraping JS rendered pages
+gem 'watir'
+gem "webdrivers", "~> 3.0"
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.1.5'
 # Use postgresql as the database for Active Record

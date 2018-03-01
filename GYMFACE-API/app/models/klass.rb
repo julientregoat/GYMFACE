@@ -24,14 +24,18 @@ class Klass < ApplicationRecord
 
     klasses = page.css('.search-result-row .class-info')
     klasses.each do |klass|
-      puts name = klass.css('h2').text.strip #title
+      name = klass.css('h2').text.strip #class name
+
       time = klass.css('.icon-time').text.strip.split(" - ")
-      puts start = date + " " + time.first
-      puts ending = date + " " + time.last
-      puts trainer = klass.css('.icon-trainer').text.strip #trainer
+      start = date + " " + time.first
+      ending = date + " " + time.last
+
+      trainer = klass.css('.icon-trainer').text.strip #trainer
+
+      newer = Klass.find_or_create_by(name: name, instructor: trainer, start_time: start, end_time: ending, location_id: location_id)
       byebug
-      # Klass.find_or_create_by(name: name, instructor: trainer, start_time: start, end_time: ending)
     end
+
     browser.close
   end
 end

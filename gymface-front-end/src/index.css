@@ -3,3 +3,24 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+
+.border{
+  border-color: black;
+  border-weight: 5px;
+  border-style: solid;
+  padding:20px
+}
+
+.mini-border{
+  border-color: black;
+  border-weight: 3px;
+  border-style: solid;
+  padding:20px
+}
+
+.tiny-border{
+  border-color: black;
+  border-weight: 3px;
+  border-style: solid;
+  padding:20px
+}

@@ -4,12 +4,14 @@ import Dashboard from './Dashboard'
 import Header from './Header'
 
 import './App.css';
+import { Grid, Divider } from 'semantic-ui-react'
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
+      <div>
         <Header />
+        <Divider />
         <Dashboard />
       </div>
     );

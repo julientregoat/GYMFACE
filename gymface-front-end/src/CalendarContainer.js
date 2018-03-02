@@ -1,13 +1,15 @@
 import React from "react"
 import CalendarList from "./CalendarList"
 
+import { Grid } from 'semantic-ui-react'
+
 class CalendarContainer extends React.Component {
   render() {
     return (
-      <div className="border">
+      <Grid>
         <h1>CalendarContainer</h1>
         <CalendarList/>
-      </div>
+      </Grid>
     );
   }
 }

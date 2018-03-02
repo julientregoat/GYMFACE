@@ -1,15 +1,16 @@
 import React from "react"
+import { Grid } from 'semantic-ui-react'
 
 class CalendarItem extends React.Component {
   render() {
     return (
-      <div>
-        <h1>CalendarItem</h1>
-        <h3>Class Name</h3>
-        <h4>Instructor's Name</h4>
-        <h4>Time</h4>
+      <Grid.Row>
+        CalendarItem
+        Class Name
+        Instructor's Name
+        Time
         <button>Join Class</button> 
-      </div>
+      </Grid.Row>
     );
   }
 }

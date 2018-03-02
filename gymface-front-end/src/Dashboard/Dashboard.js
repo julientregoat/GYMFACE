@@ -2,7 +2,7 @@ import React from 'react';
 import CalendarContainer from "./CalendarContainer"
 
 const Dashboard = () => (
-  <div>
+  <div className="page">
     <CalendarContainer />
   </div>
 );

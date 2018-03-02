@@ -6,10 +6,10 @@ import { Grid } from 'semantic-ui-react'
 class CalendarContainer extends React.Component {
   render() {
     return (
-      <Grid>
-        <h1>CalendarContainer</h1>
+      <React.Fragment>
+        <h1> Calendar Container</h1>
         <CalendarList/>
-      </Grid>
+      </React.Fragment>
     );
   }
 }

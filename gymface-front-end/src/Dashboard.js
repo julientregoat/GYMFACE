@@ -1,7 +1,7 @@
 import React from 'react';
 import CalendarContainer from "./CalendarContainer"
 
-const Dashboard = ({}) => (
+const Dashboard = () => (
   <div>
     <CalendarContainer />
   </div>

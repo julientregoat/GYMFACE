@@ -1,13 +1,14 @@
 import React from "react"
 import CalendarItem from "./CalendarItem"
 
+import { Grid } from 'semantic-ui-react'
+
 const CalendarList = (props) => {
 //map through classlist from fetch 
   return (
-    <div classname="mini-border">
-      <h1>CalendarList</h1>
+    <Grid columns={5} centered>
       <CalendarItem/>
-    </div>
+    </Grid>
   );
 }
 

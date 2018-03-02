@@ -6,7 +6,7 @@ import { Grid } from 'semantic-ui-react'
 const CalendarList = (props) => {
 //map through classlist from fetch 
   return (
-    <Grid columns={5}>
+    <Grid centered columns={5}>
       <CalendarItem/>
     </Grid>
   );

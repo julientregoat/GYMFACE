@@ -7,3 +7,8 @@
 #header, .page {
   width: 100%;
 }
+
+.calendarItem {
+  justify-content: space-between !important;
+  max-width: 50% !important;
+}

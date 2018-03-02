@@ -4,7 +4,7 @@ import { Grid } from 'semantic-ui-react'
 class CalendarItem extends React.Component {
   render() {
     return (
-      <Grid.Row>
+      <Grid.Row className="calendarItem">
         CalendarItem
         Class Name
         Instructor's Name

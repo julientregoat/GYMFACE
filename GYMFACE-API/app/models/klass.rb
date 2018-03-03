@@ -5,8 +5,8 @@ class Klass < ApplicationRecord
   has_many :user_klasses
   has_many :users, through: :user_klasses
 
-  def self.fetchKlasses(location_id, date = Date.today.strftime("%Y-%m-%d"))
-    # needs YYYY-MM-DD format
+  def self.fetchKlasses(location_id=110, date = Date.today.strftime("%Y-%m-%d"))
+    # needs YYYY-MM-DD / YYYY-M-D format
 
     url = 'https://www.equinox.com/classschedule?clubs=' + location_id.to_s + "&date=" + date
 
@@ -32,8 +32,7 @@ class Klass < ApplicationRecord
 
       trainer = klass.css('.icon-trainer').text.strip #trainer
 
-      newer = Klass.find_or_create_by(name: name, instructor: trainer, start_time: start, end_time: ending, location_id: location_id)
-      byebug
+      Klass.find_or_create_by(name: name, instructor: trainer, start_time: start, end_time: ending, location_id: location_id)
     end
 
     browser.close

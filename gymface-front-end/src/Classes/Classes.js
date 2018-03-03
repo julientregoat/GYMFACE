@@ -35,12 +35,21 @@ class Classes extends Component {
       joined: false
     }
   }
+  
+  handleCalendar = () => {
+    // only change if date isn't the same as previous viewDate
+    console.log("calendar!")
+  }
+  
+  // need to manage adding classes
+  
+  // loading screen for when class dates are loading?
 
   render() {
     return (
       <Grid centered columns={5}>
         <Grid.Row><h1> Viewing All Classes for {this.state.viewDate.toString().slice(0, 15)}</h1></Grid.Row>
-        <Grid.Row><input type="date" /></Grid.Row>
+        <Grid.Row><input type="date" onChange={this.handleCalendar}/></Grid.Row>
         
         <CalendarItem classInfo={this.columnHeaders()}/>
 

@@ -10,7 +10,7 @@ class App extends Component {
   render() {
     return (
       <Grid centered id="app">
-        <Grid.Row streched><Header /></Grid.Row>
+        <Grid.Row><Header /></Grid.Row>
         <Grid.Row><Dashboard /></Grid.Row>
       </Grid>
     );

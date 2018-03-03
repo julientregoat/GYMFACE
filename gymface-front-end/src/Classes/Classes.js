@@ -17,7 +17,10 @@ class Classes extends Component {
 
   strfDate(){
     let date = this.state.viewDate
-    return `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`
+    let paddedMonth = date.getMonth() + 1
+    paddedMonth = paddedMonth < 10 ? "0" + paddedMonth : paddedMonth
+    let paddedDate = date.getDate() < 10 ? "0" + date.getDate() : date.getDate()
+    return `${date.getFullYear()}-${paddedMonth}-${paddedDate}`
   }
 
   fetchClasses = () => {
@@ -49,7 +52,7 @@ class Classes extends Component {
     return (
       <Grid centered columns={5}>
         <Grid.Row><h1> Viewing All Classes for {this.state.viewDate.toString().slice(0, 15)}</h1></Grid.Row>
-        <Grid.Row><input type="date" onChange={this.handleCalendar}/></Grid.Row>
+        <Grid.Row><input type="date" value={this.strfDate()} onChange={this.handleCalendar}/></Grid.Row>
         
         <CalendarItem classInfo={this.columnHeaders()}/>
 

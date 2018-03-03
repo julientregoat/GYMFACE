@@ -37,4 +37,9 @@ class Klass < ApplicationRecord
 
     browser.close
   end
+
+  def self.class_by_date(date = Date.today)
+    return Klass.where(["start_time >= ? AND start_time <= ?", date, date + 1])
+  end
+
 end

@@ -16,8 +16,8 @@ class Classes extends Component {
   }
 
   strfDate(){
-    let today = new Date()
-    return `${today.getFullYear()}-${today.getMonth()}-${today.getDate()}`
+    let date = this.state.viewDate
+    return `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`
   }
 
   fetchClasses = () => {
@@ -26,11 +26,23 @@ class Classes extends Component {
       this.setState({classes: classes})
     })
   }
+  
+  columnHeaders(){
+    return { name: <h3>Name</h3>,
+      instructor: <h3>Instructor</h3>,
+      start_time: <h3>Start Time</h3>,
+      end_time: <h3>End Time</h3>,
+      joined: false
+    }
+  }
 
   render() {
     return (
       <Grid centered columns={5}>
-        <Grid.Row><h1> Viewing All Classes </h1></Grid.Row>
+        <Grid.Row><h1> Viewing All Classes for {this.state.viewDate.toString().slice(0, 15)}</h1></Grid.Row>
+        <Grid.Row><input type="date" /></Grid.Row>
+        
+        <CalendarItem classInfo={this.columnHeaders()}/>
 
         {this.state.classes.map(clas => <CalendarItem key={clas.id} classInfo={clas}/>)}
 

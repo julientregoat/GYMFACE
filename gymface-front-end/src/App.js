@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
 
+import Header from './Header'
 import Dashboard from './Dashboard/Dashboard'
 import Classes from './Classes/Classes'
-import Header from './Header'
+import Account from './Account/Account'
 
 import './App.css';
 import { Grid } from 'semantic-ui-react'
@@ -27,6 +28,7 @@ class App extends Component {
                 <Switch>
                     <Route exact path="/" component={Dashboard} />
                     <Route exact path="/classes" component={Classes} />
+                    <Route exact path="/account" component={Account} />
                     <Redirect to="/" />
                 </Switch>
               </div>

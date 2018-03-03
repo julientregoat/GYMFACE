@@ -4,14 +4,17 @@ import CalendarItem from "./CalendarItem"
 import { Grid } from 'semantic-ui-react'
 
 class CalendarContainer extends React.Component {
-  // should be fetching current users classes
+  state = {
+    classes: []
+  }
   
   componentDidMount(){
     this.fetchUserCalendar()
   }
   
   fetchUserCalendar(){
-    console.log("Hi")
+    fetch('http://localhost:3001/users/1')
+    .then(res => res.json()).then(user => this.setState({classes: user.klasses}))
   }
   
   // map this.props.calendar items using CalendarItem
@@ -19,7 +22,7 @@ class CalendarContainer extends React.Component {
     return (
       <Grid centered columns={5}>
         <Grid.Row><h1>Today's Schedule</h1></Grid.Row>
-        <CalendarItem/>
+        {this.state.classes.map(clas => <CalendarItem key={clas.id} classInfo={clas} joined={true}/>)}
       </Grid>
     );
   }

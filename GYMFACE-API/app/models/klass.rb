@@ -12,7 +12,7 @@ class Klass < ApplicationRecord
 
     browser = Watir::Browser.new(:chrome)
     browser.goto(url)
-    sleep 2
+    sleep 1
     page = Nokogiri::HTML(browser.html)
 
     # .search-result-row is the class of every item

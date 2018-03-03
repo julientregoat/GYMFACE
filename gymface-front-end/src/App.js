@@ -23,11 +23,13 @@ class App extends Component {
             </Grid.Row>
             
             <Grid.Row>
-              <Switch>
-                  <Route exact path="/" component={Dashboard} />
-                  <Route exact path="/classes" component={Classes} />
-                  <Redirect to="/" />
-              </Switch>
+              <div className="page">
+                <Switch>
+                    <Route exact path="/" component={Dashboard} />
+                    <Route exact path="/classes" component={Classes} />
+                    <Redirect to="/" />
+                </Switch>
+              </div>
             </Grid.Row>
             
           </React.Fragment>

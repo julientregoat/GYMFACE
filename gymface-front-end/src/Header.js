@@ -9,7 +9,7 @@ const Header = () => (
       <Link to="/"><Menu.Item content="Dashboard"/></Link>
       <Link to="/classes"><Menu.Item content="View Classes"/></Link>
       <Link to="/"><Menu.Item content="View Restaurants"/></Link>
-      <Link to="/"><Menu.Item position="right" content="Your Account"/></Link>
+      <Menu.Item position="right" content={<Link to="/">My Account</Link>}/>
     </Menu>
     
   </div>

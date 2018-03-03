@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
+import CalendarItem from '../Dashboard/CalendarItem'
+
+import { Grid } from 'semantic-ui-react'
 
 class Classes extends Component {
 
 
   state = {
-    viewDate: {}
+    viewDate: new Date(),
+    classes: []
   }
 
   componentDidMount(){
@@ -18,15 +22,19 @@ class Classes extends Component {
 
   fetchClasses = () => {
     fetch('http://localhost:3001/klasses')
-    .then(res => res.json()).then(json => console.log(json))
+    .then(res => res.json()).then(classes => {
+      this.setState({classes: classes})
+    })
   }
 
   render() {
     return (
-      <div>
-        <h1> Viewing All Classes </h1>
-        <h2>  </h2>
-      </div>
+      <Grid centered columns={5}>
+        <Grid.Row><h1> Viewing All Classes </h1></Grid.Row>
+
+        {this.state.classes.map(clas => <CalendarItem key={clas.id} classInfo={clas}/>)}
+
+      </Grid>
     );
   }
 

@@ -2,9 +2,9 @@ import React from 'react';
 import CalendarContainer from "./CalendarContainer"
 
 const Dashboard = () => (
-  <div className="page">
+  <React.Fragment>
     <CalendarContainer />
-  </div>
+  </React.Fragment>
 );
 
 export default Dashboard;

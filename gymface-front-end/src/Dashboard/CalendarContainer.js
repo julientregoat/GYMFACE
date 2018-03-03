@@ -13,6 +13,8 @@ class CalendarContainer extends React.Component {
   fetchUserCalendar(){
     console.log("Hi")
   }
+  
+  // map this.props.calendar items using CalendarItem
   render() {
     return (
       <Grid centered columns={5}>

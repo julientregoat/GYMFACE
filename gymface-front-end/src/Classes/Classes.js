@@ -54,7 +54,7 @@ class Classes extends Component {
         <Grid.Row><h1> Viewing All Classes for {this.state.viewDate.toString().slice(0, 15)}</h1></Grid.Row>
         <Grid.Row><input type="date" value={this.strfDate()} onChange={this.handleCalendar}/></Grid.Row>
         
-        <CalendarItem classInfo={this.columnHeaders()}/>
+        <CalendarItem classInfo={this.columnHeaders()} display={true}/>
 
         {this.state.classes.map(clas => <CalendarItem key={clas.id} classInfo={clas}/>)}
 

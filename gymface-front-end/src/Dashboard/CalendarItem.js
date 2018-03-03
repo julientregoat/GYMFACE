@@ -10,7 +10,9 @@ const CalendarItem = (props) => (
     <span>{props.classInfo.instructor}</span>
     <span>{props.classInfo.start_time}</span>
     <span>{props.classInfo.end_time}</span>
-    <button>{props.joined ? "Drop Class" : "Join Class"  }</button> 
+    { props.display ? 
+      <span /> : 
+      <button>{props.joined ? "Drop Class" : "Join Class"  }</button> } 
   </Grid.Row>
 );
 

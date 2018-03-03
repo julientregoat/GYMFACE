@@ -36,7 +36,7 @@ class Account extends Component {
         audio={false} 
         ref={this.setRef}
         screenshotFormat="image/jpeg"/>
-        <img src={this.state.capturedImage}/></Grid.Row>
+        <img src={this.state.capturedImage} alt="snapshot results"/></Grid.Row>
       </Grid>
     );
   }

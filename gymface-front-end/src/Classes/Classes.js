@@ -7,7 +7,7 @@ class Classes extends Component {
 
 
   state = {
-    viewDate: new Date(),
+    viewDate: new Date().toString().slice(0, 15),
     classes: []
   }
 
@@ -23,10 +23,12 @@ class Classes extends Component {
     return `${date.getFullYear()}-${paddedMonth}-${paddedDate}`
   }
 
-  fetchClasses = () => {
-    fetch('http://localhost:3001/klasses')
+  fetchClasses = (date) => {
+    fetch(`http://localhost:3001/klasses?date=${date}`)
     .then(res => res.json()).then(classes => {
       this.setState({classes: classes})
+      console.log(date)
+      date ? this.setState({viewDate: new Date(date).toString().slice(0, 15)}) : null
     })
   }
   
@@ -39,20 +41,28 @@ class Classes extends Component {
     }
   }
   
-  handleCalendar = () => {
-    // only change if date isn't the same as previous viewDate
-    console.log("calendar!")
+  handleCalendar = (event) => {
+    this.fetchClasses(event.target.value)
   }
   
   // need to manage adding classes
   
   // loading screen for when class dates are loading?
+  
+  // display date is one day off. something to do with 
+  // javascript timezone. if I use .getUTCDate(), it returns the right one.
 
   render() {
     return (
       <Grid centered columns={5}>
-        <Grid.Row><h1> Viewing All Classes for {this.state.viewDate.toString().slice(0, 15)}</h1></Grid.Row>
-        <Grid.Row><input type="date" value={this.strfDate()} onChange={this.handleCalendar}/></Grid.Row>
+        <Grid.Row>
+        <h1> Viewing All Classes for {this.state.viewDate}</h1>
+        </Grid.Row>
+        
+        <Grid.Row className="calendarItem" >
+          <span>View classes for another date:</span>
+          <input type="date" onChange={this.handleCalendar}/>
+        </Grid.Row>
         
         <CalendarItem classInfo={this.columnHeaders()} display={true}/>
 

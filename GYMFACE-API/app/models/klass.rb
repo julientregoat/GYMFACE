@@ -5,16 +5,15 @@ class Klass < ApplicationRecord
   has_many :user_klasses
   has_many :users, through: :user_klasses
 
-  def self.fetchKlasses(location_id=110, date = Date.today.strftime("%Y-%m-%d"))
+  def self.fetchKlasses(date = Date.today.strftime("%Y-%m-%d"), location_id=110)
     # needs YYYY-MM-DD / YYYY-M-D format
 
     url = 'https://www.equinox.com/classschedule?clubs=' + location_id.to_s + "&date=" + date
 
     browser = Watir::Browser.new(:chrome)
     browser.goto(url)
-    sleep 1
+    sleep 0.7
     page = Nokogiri::HTML(browser.html)
-
     # .search-result-row is the class of every item
     # .search-result-row.class-info provides the class info
     # => h2 has the class title
@@ -39,6 +38,7 @@ class Klass < ApplicationRecord
   end
 
   def self.class_by_date(date = Date.today)
+    date.class == String ? date = Date.parse(date) : date
     return Klass.where(["start_time >= ? AND start_time <= ?", date, date + 1])
   end
 

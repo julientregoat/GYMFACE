@@ -5,6 +5,16 @@ import UserInfo from './UserInfo'
 import { Grid } from 'semantic-ui-react'
 import Webcam from 'react-webcam'
 
+import { AWS_ID, AWS_KEY } from '../env.js'
+
+var AWS = require('aws-sdk');
+var myConfig = new AWS.Config({
+  accessKeyId: AWS_ID, secretAccessKey: AWS_KEY, region: 'us-east-2'
+})
+var s3 = new AWS.S3(myConfig);
+var rekognition = new AWS.Rekognition(myConfig);
+
+
 class Account extends Component {
 
   state = {
@@ -25,7 +35,7 @@ class Account extends Component {
 
   capture = () => {
     const imageSrc = this.webcam.getScreenshot();
-    this.setState({capturedImage: imageSrc})
+    this.setState({capturedImage: imageSrc}, () => this.generateBuffer())
   };
 
   handleEditInfo = () => {
@@ -59,6 +69,32 @@ class Account extends Component {
        this.handleEditInfo()
      })
 
+     generateBuffer = () => {
+       var rawdata = this.state.capturedImage;
+       var matches = rawdata.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/);
+       var type = matches[1]; // e.g. 'image/jpeg'
+       var buffer = new Buffer(matches[2], 'base64');
+       // ^^ img content converted to binary buffer stream
+       console.log(AWS_ID)
+       var params = {
+         SourceImage: {
+          S3Object: {
+           Bucket: "gymface-faces",
+           Name: "user-1.jpg"
+          }
+         },
+         TargetImage: {
+           Bytes: buffer
+         }
+        }
+
+        rekognition.compareFaces(params, function(err, data) {
+          if (err) {
+            console.log("error", err, err.stack)
+          } else {
+            console.log("not error", data)
+          }
+        })
 
 
 

@@ -27,7 +27,6 @@ class Classes extends Component {
     fetch(`http://localhost:3001/klasses?date=${date}`)
     .then(res => res.json()).then(classes => {
       this.setState({classes: classes})
-      console.log(date)
       date ? this.setState({viewDate: new Date(date).toString().slice(0, 15)}) : null
     })
   }
@@ -68,7 +67,6 @@ class Classes extends Component {
   handleCalendar = (event) => {
     this.fetchClasses(event.target.value)
   }
-
 
   // need to manage adding classes
 

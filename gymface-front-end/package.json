@@ -3,12 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "gatsby": "^1.9.223",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.1.1",
     "react-transition-group": "^2.2.1",
     "react-webcam": "^0.2.0",
+    "react-youtube": "^7.5.0",
     "semantic-ui-react": "^0.78.3"
   },
   "scripts": {

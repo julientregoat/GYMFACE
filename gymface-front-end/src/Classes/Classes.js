@@ -31,7 +31,31 @@ class Classes extends Component {
       date ? this.setState({viewDate: new Date(date).toString().slice(0, 15)}) : null
     })
   }
-  
+
+  addClass = (clas) => {
+    fetch(`http://localhost:3001/user_klasses`,
+    { method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(
+        {klass_id:clas.id, user_id:1}
+      )
+    }
+    ).then(response => response.json())
+     .then(console.log)
+  }
+
+  dropClass = (clas) => {
+    fetch(`http://localhost:3001/user_klasses/1`,
+    { method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(
+        {klass_id:clas.id, user_id:1}
+      )
+    }
+    ).then(response => response.json())
+     .then(console.log)
+  }
+
   columnHeaders(){
     return { name: <h3>Name</h3>,
       instructor: <h3>Instructor</h3>,
@@ -40,16 +64,17 @@ class Classes extends Component {
       joined: false
     }
   }
-  
+
   handleCalendar = (event) => {
     this.fetchClasses(event.target.value)
   }
-  
+
+
   // need to manage adding classes
-  
+
   // loading screen for when class dates are loading?
-  
-  // display date is one day off. something to do with 
+
+  // display date is one day off. something to do with
   // javascript timezone. if I use .getUTCDate(), it returns the right one.
 
   render() {
@@ -58,15 +83,15 @@ class Classes extends Component {
         <Grid.Row>
         <h1> Viewing All Classes for {this.state.viewDate}</h1>
         </Grid.Row>
-        
+
         <Grid.Row className="calendarItem" >
           <span>View classes for another date:</span>
           <input type="date" onChange={this.handleCalendar}/>
         </Grid.Row>
-        
+
         <CalendarItem classInfo={this.columnHeaders()} display={true}/>
 
-        {this.state.classes.map(clas => <CalendarItem key={clas.id} classInfo={clas}/>)}
+        {this.state.classes.map(clas => <CalendarItem key={clas.id} classInfo={clas} addClass={this.addClass} dropClass={this.dropClass}/>)}
 
       </Grid>
     );

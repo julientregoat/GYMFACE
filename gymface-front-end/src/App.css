@@ -1,3 +1,8 @@
+.body{
+  font-family: 'Raleway', sans-serif;
+  color: white
+}
+
 #app {
   margin-top: 50px;
   margin-left: 10%;
@@ -11,4 +16,25 @@
 .calendarItem {
   justify-content: space-between !important;
   max-width: 80% !important;
+}
+
+.welcome-message{
+  font-family: 'Raleway', sans-serif;
+}
+
+.myVideo {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    min-width: 100%;
+    min-height: 100%;
+}
+
+.dashboard-cal{
+    position: fixed;
+    /* bottom: 0; */
+    background: rgba(0, 0, 0, 0.5);
+    color: #f1f1f1;
+    width: 100%;
+    padding: 20px;
 }

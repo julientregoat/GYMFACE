@@ -9,7 +9,8 @@ class Account extends Component {
 
   state = {
     user: {},
-    capturedImage: ""
+    capturedImage: "",
+    edit:false
   }
 
   componentDidMount(){
@@ -17,7 +18,7 @@ class Account extends Component {
     .then(res => res.json())
     .then(user => this.setState({user: user}))
   }
-  
+
   setRef = (webcam) => {
     this.webcam = webcam;
   }
@@ -27,13 +28,51 @@ class Account extends Component {
     this.setState({capturedImage: imageSrc})
   };
 
+  handleEditInfo = () => {
+    this.setState({edit:!this.state.edit})
+  }
+
+
+  handleInputChange= (event) => {
+    const target = event.target;
+    const value = target.value
+    const name = target.name;
+
+    this.setState({
+      [name]: value
+    });
+
+}
+  }
+  updateInfo = (user) => {
+    fetch(`http://localhost:3001/user_klasses/1`,
+    { method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(
+        {user_id:user.id,
+        user_name:user.name}
+      )
+    }
+    ).then(response => response.json())
+     .then(data=> {
+       console.log(data)
+       this.handleEditInfo()
+     })
+
+
+
+
+  }
+
   render() {
     return (
       <Grid centered columns={2}>
-        <Grid.Row><UserInfo user={this.state.user}/>
+        <Grid.Row><UserInfo user={this.state.user} edit={this.state.edit} updateInfo={this.updateInfo} handleInputChange={this.handleInputChange}/>
         <button onClick={this.capture}>Capture photo</button></Grid.Row>
-        <Grid.Row><Webcam 
-        audio={false} 
+        <button onClick={this.handleEditInfo}>Edit Profile</button></Grid.Row>
+
+        <Grid.Row><Webcam
+        audio={false}
         ref={this.setRef}
         screenshotFormat="image/jpeg"/>
         <img src={this.state.capturedImage} alt="snapshot results"/></Grid.Row>

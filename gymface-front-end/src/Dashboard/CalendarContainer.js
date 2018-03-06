@@ -35,7 +35,7 @@ class CalendarContainer extends React.Component {
   }
 
   dropClass = (clas) => {
-    fetch(`http://localhost:3001/user_klasses/1`,
+    fetch(`http://localhost:3001/user_klasses/`,
     { method: "DELETE",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(
@@ -49,7 +49,7 @@ class CalendarContainer extends React.Component {
   // map this.props.calendar items using CalendarItem
   render() {
     return (
-      <div className="dashboard-cal">
+      <div className="dashboard-cal page">
         <h1 className="w3-animate-opacity">Welcome Meatbag!</h1>
         <Grid centered columns={5}>
           {console.log("rendering grid in calendarcont")}

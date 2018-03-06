@@ -77,7 +77,7 @@ class Classes extends Component {
 
   render() {
     return (
-      <Grid centered columns={5}>
+      <Grid className="dashboard-cal page" centered columns={5}>
         <Grid.Row>
         <h1> Viewing All Classes for {this.state.viewDate}</h1>
         </Grid.Row>

@@ -18,10 +18,20 @@ var rekognition = new AWS.Rekognition(myConfig);
 class Account extends Component {
 
   state = {
-    user: {},
+    user: {
+      name:"",
+      username:"",
+      email:"",
+      home_club_id:""
+    },
     capturedImage: "",
     edit:false
   }
+
+  handleName = (event) => {this.setState({user:{...this.state.user, name:event.target.value}})}
+  handleUsername = (event) => {this.setState({user:{...this.state.user, username:event.target.value}})}
+  handleEmail = (event) => {this.setState({user:{...this.state.user, email:event.target.value}})}
+  handleHomeClubId = (event) => {this.setState({user:{...this.state.user, home_club_id:event.target.value}})}
 
   componentDidMount(){
     fetch('http://localhost:3001/users/1')
@@ -42,72 +52,71 @@ class Account extends Component {
     this.setState({edit:!this.state.edit})
   }
 
-
-  handleInputChange = (event) => {
-    const target = event.target;
-    const value = target.value
-    const name = target.name;
-
-    this.setState({
-      [name]: value
-    });
-  }
-
-  updateInfo = (user) => {
-    fetch(`http://localhost:3001/user_klasses/1`,
-    { method: "PATCH",
+  handleFormInput = (event) => {
+    event.preventDefault()
+    fetch(`http://localhost:3001/users/1`, {
+      method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(
-        {user_id:user.id,
-        user_name:user.name}
+        {user_id:1,
+        name:event.target.name.value,
+        username:event.target.username.value,
+        email:event.target.email.value,
+        home_club_id:event.target.home_club_id.value
+        }
       )
-    }
-    ).then(response => response.json())
-     .then(data=> {
-       console.log(data)
-       this.handleEditInfo()
-     })
-   }
+    }).then(response => response.json())
+      .then(data => this.handleEditInfo())
+  }
 
-   generateBuffer = () => {
-     var rawdata = this.state.capturedImage;
-     var matches = rawdata.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/);
-     var type = matches[1]; // e.g. 'image/jpeg'
-     var buffer = new Buffer(matches[2], 'base64');
-     // ^^ img content converted to binary buffer stream
-     console.log(AWS_ID)
-     var params = {
-       SourceImage: {
-        S3Object: {
-         Bucket: "gymface-faces",
-         Name: "user-1.jpg"
+
+     generateBuffer = () => {
+       var rawdata = this.state.capturedImage;
+       var matches = rawdata.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/);
+       var type = matches[1]; // e.g. 'image/jpeg'
+       var buffer = new Buffer(matches[2], 'base64');
+       // ^^ img content converted to binary buffer stream
+       console.log(AWS_ID)
+       var params = {
+         SourceImage: {
+          S3Object: {
+           Bucket: "gymface-faces",
+           Name: "user-1.jpg"
+          }
+         },
+         TargetImage: {
+           Bytes: buffer
+         }
         }
-       },
-       TargetImage: {
-         Bytes: buffer
-       }
-      }
 
-      rekognition.compareFaces(params, function(err, data) {
-        if (err) {
-          console.log("error", err, err.stack)
-        } else {
-          console.log("not error", data)
-        }
-      })
-    }
-
+        rekognition.compareFaces(params, function(err, data) {
+          if (err) {
+            console.log("error", err, err.stack)
+          } else {
+            console.log("not error", data)
+          }
+        })
+  }
 
   render() {
     return (
       <Grid centered columns={2}>
-        <Grid.Row><UserInfo user={this.state.user} edit={this.state.edit} updateInfo={this.updateInfo} handleInputChange={this.handleInputChange}/></Grid.Row>
-        <Grid.Row><button onClick={this.capture}>Capture photo</button><button onClick={this.handleEditInfo}>Edit Profile</button></Grid.Row>
+        <Grid.Row><UserInfo user={this.state.user}
+                            edit={this.state.edit}
+                            updateInfo={this.updateInfo}
+                            handleFormInput={this.handleFormInput}
+                            handleName={this.handleName}
+                            handleUsername={this.handleUsername}
+                            handleEmail={this.handleEmail}
+                            handleHomeClubId={this.handleHomeClubId}/>
+        <button onClick={this.capture}>Capture photo</button>
+        <button onClick={this.handleEditInfo}>Edit Profile</button></Grid.Row>
 
-        <Grid.Row>
-          <Webcam audio={false} ref={this.setRef} screenshotFormat="image/jpeg"/>
-          <img src={this.state.capturedImage} alt="snapshot results"/>
-        </Grid.Row>
+        <Grid.Row><Webcam
+        audio={false}
+        ref={this.setRef}
+        screenshotFormat="image/jpeg"/>
+        <img src={this.state.capturedImage} alt="snapshot results"/></Grid.Row>
       </Grid>
     );
   }

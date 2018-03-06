@@ -15,6 +15,7 @@ class UserKlassesController < ApplicationController
   def destroy
     user = User.find(create_params[:user_id])
     user.klasses.delete(create_params[:klass_id])
+    byebug
     if user.save
       render json: {message: "Success!"}, status: 200
     else

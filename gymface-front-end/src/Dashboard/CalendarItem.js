@@ -17,7 +17,7 @@ const CalendarItem = (props) => (
       <span>{props.classInfo.end_time}</span>
       { props.display ?
         <span /> :
-        <button onClick={()=>props.addClass(props.classInfo)}>{props.joined ? "Drop Class" : "Join Class"  }</button> }
+        <button onClick={()=> props.joined ? props.dropClass(props.classInfo) : props.addClass(props.classInfo)}>{props.joined ? "Drop Class" : "Join Class"  }</button> }
     </Grid.Row>
 );
 

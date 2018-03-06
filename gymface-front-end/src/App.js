@@ -13,6 +13,10 @@ import { Grid } from 'semantic-ui-react'
 
 class App extends Component {
 
+  state = {
+    currentUser: null
+  }
+
   // should define a check logged in callback here for router
 
   // perhaps should manage class lists in state up here? this would allow us to

@@ -75,6 +75,7 @@ class Account extends Component {
      var type = matches[1]; // e.g. 'image/jpeg'
      var buffer = new Buffer(matches[2], 'base64');
      // ^^ img content converted to binary buffer stream
+     console.log(matches[2])
      console.log(AWS_ID)
      var params = {
        SourceImage: {

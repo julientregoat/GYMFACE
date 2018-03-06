@@ -9,10 +9,11 @@ class UsersController < ApplicationController
   end
 
   def update
-    
+
   end
 
   def login
+    byebug
   end
 
   def logout

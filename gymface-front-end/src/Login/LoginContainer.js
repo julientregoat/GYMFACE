@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import LoginForm from './LoginForm'
 
 import { Grid } from 'semantic-ui-react';
-import Webcam from 'react-webcam'
+import WebcamContainer from '../WebcamContainer';
 
 import { AWS_ID, AWS_KEY } from '../env.js'
 
@@ -16,69 +16,56 @@ var rekognition = new AWS.Rekognition(myConfig);
 
 class LoginContainer extends Component {
 
-  state = {
-    capturedImage: ""
-  }
+   matchFace = (buffer) => {
+     let params = {
+       CollectionId: "gymface",
+       FaceMatchThreshold: 95,
+       Image: { Bytes: buffer },
+       MaxFaces: 5
+     };
 
-  setRef = (webcam) => {
-    this.webcam = webcam;
-  }
+     rekognition.searchFacesByImage(params, function(err, data) {
+        if (err) {
+          alert("Make sure your face is in the photo!")
+        } else if (data["FaceMatches"].length === 0){
+          alert("No user found. Try again.")
+        } else {
+          console.log(data)
+          fetch('http://localhost:3001/login', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({face_info: data})
+          }).then(res => res.json()).then(json => alert(`Welcome, ${json.name}`))
+        }
+      })
+   }
 
-  capture = () => {
-    const imageSrc = this.webcam.getScreenshot();
-    this.setState({capturedImage: imageSrc}, () => this.generateBuffer())
-  };
+   handleLogin = (event) => {
+     event.preventDefault()
+     let username = event.target.username.value
+     let password = event.target.password.value
 
-  generateBuffer = () => {
-    var rawdata = this.state.capturedImage;
-    var matches = rawdata.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/);
-    var type = matches[1]; // e.g. 'image/jpeg'
-    var buffer = new Buffer(matches[2], 'base64');
-    // ^^ img content converted to binary buffer stream
-    console.log(rawdata, buffer)
-    // var params = {
-    //   SourceImage: {
-    //    S3Object: {
-    //     Bucket: "gymface-faces",
-    //     Name: "user-1.jpg"
-    //    }
-    //   },
-    //   TargetImage: {
-    //     Bytes: buffer
-    //   }
-    //  }
-    var params = {
-      CollectionId: "gymface",
-      FaceMatchThreshold: 95,
-      Image: {
-        Bytes: buffer
-      },
-      MaxFaces: 5
-    };
-    rekognition.searchFacesByImage(params, function(err, data) {
-       if (err) {
-         alert("Make sure your face is in the photo!")
+     fetch('http://localhost:3001/login', {
+       method: 'POST',
+       headers: {'Content-Type': 'application/json'},
+       body: JSON.stringify({user: {username: username, password: password}})
+     }).then(res => res.json()).then(user => {
+       if (user.error){
+         alert(user.error)
        } else {
-         console.log("not error", data)
+         alert(`Welcome, ${user.name}`)
        }
      })
-    // fetch('http://localhost:3001/login', {
-    //   method: 'POST',
-    //   headers: {'Content-Type': 'application/json'},
-    //   body: JSON.stringify(buffer)
-    // })
    }
 
   render() {
     return (
       <Grid centered columns={2}>
         <Grid.Row>
-          <Webcam audio={false} ref={this.setRef} screenshotFormat="image/jpeg"/>
-          <img src={this.state.capturedImage} alt="snapshot results"/>
+          <WebcamContainer webcamCallback={this.matchFace}/>
         </Grid.Row>
-        <button onClick={this.capture}>Capture Login Photo</button>
         <Grid.Row>
-          <LoginForm />
+          <LoginForm loginCallback={this.handleLogin}/>
         </Grid.Row>
       </Grid>
     );

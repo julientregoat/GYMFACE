@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 
 import LoginForm from './LoginForm'
-
-import { Grid } from 'semantic-ui-react';
 import WebcamContainer from '../WebcamContainer';
 
 import { AWS_ID, AWS_KEY } from '../env.js'
+import { Grid } from 'semantic-ui-react';
+import { Redirect } from 'react-router-dom';
 
 var AWS = require('aws-sdk');
 var myConfig = new AWS.Config({
@@ -24,18 +24,20 @@ class LoginContainer extends Component {
        MaxFaces: 5
      };
 
-     rekognition.searchFacesByImage(params, function(err, data) {
+     rekognition.searchFacesByImage(params, (err, data) => {
         if (err) {
           alert("Make sure your face is in the photo!")
         } else if (data["FaceMatches"].length === 0){
           alert("No user found. Try again.")
         } else {
-          console.log(data)
           fetch('http://localhost:3001/login', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({face_info: data})
-          }).then(res => res.json()).then(json => alert(`Welcome, ${json.name}`))
+          }).then(res => res.json()).then(json => {
+            alert(`Welcome, ${json.name}`)
+            this.props.setUser(json)
+          })
         }
       })
    }
@@ -53,7 +55,7 @@ class LoginContainer extends Component {
        if (user.error){
          alert(user.error)
        } else {
-         alert(`Welcome, ${user.name}`)
+         this.props.setUser(user)
        }
      })
    }
@@ -61,6 +63,7 @@ class LoginContainer extends Component {
   render() {
     return (
       <Grid centered columns={2}>
+        <h1> Login </h1>
         <Grid.Row>
           <WebcamContainer webcamCallback={this.matchFace}/>
         </Grid.Row>

@@ -17,12 +17,13 @@ class App extends Component {
     currentUser: null
   }
 
-  // should define a check logged in callback here for router
-
   // perhaps should manage class lists in state up here? this would allow us to
   // fetch the current day's classes once the user loads the app and save time.
+  // make higher order component for auth
 
-  // handle logged in state up here to conditionally render the login page.
+  setUser = (user) => {
+    this.setState({currentUser: user})
+  }
 
   render() {
     return (
@@ -37,12 +38,15 @@ class App extends Component {
             <Grid.Row>
               <div className="page">
                 <Switch>
+                  <Route exact path="/login" render={()=> <LoginContainer setUser={this.setUser}/>} />
+                  <Route exact path="/signup" component={SignUpContainer} />
+                  {this.state.currentUser ?
+                    <React.Fragment>
                     <Route exact path="/" component={Dashboard} />
                     <Route exact path="/classes" component={Classes} />
                     <Route exact path="/account" component={Account} />
-                    <Route exact path="/login" component={LoginContainer} />
-                    <Route exact path="/signup" component={SignUpContainer} />
-                    <Redirect to="/" />
+                    </React.Fragment>
+                    : <Redirect to="/login" />}
                 </Switch>
               </div>
             </Grid.Row>

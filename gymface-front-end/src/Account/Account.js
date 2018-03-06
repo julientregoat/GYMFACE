@@ -101,15 +101,13 @@ class Account extends Component {
   render() {
     return (
       <Grid centered columns={2}>
-        <Grid.Row><UserInfo user={this.state.user} edit={this.state.edit} updateInfo={this.updateInfo} handleInputChange={this.handleInputChange}/>
-        <button onClick={this.capture}>Capture photo</button></Grid.Row>
-        <button onClick={this.handleEditInfo}>Edit Profile</button></Grid.Row>
+        <Grid.Row><UserInfo user={this.state.user} edit={this.state.edit} updateInfo={this.updateInfo} handleInputChange={this.handleInputChange}/></Grid.Row>
+        <Grid.Row><button onClick={this.capture}>Capture photo</button><button onClick={this.handleEditInfo}>Edit Profile</button></Grid.Row>
 
-        <Grid.Row><Webcam
-        audio={false}
-        ref={this.setRef}
-        screenshotFormat="image/jpeg"/>
-        <img src={this.state.capturedImage} alt="snapshot results"/></Grid.Row>
+        <Grid.Row>
+          <Webcam audio={false} ref={this.setRef} screenshotFormat="image/jpeg"/>
+          <img src={this.state.capturedImage} alt="snapshot results"/>
+        </Grid.Row>
       </Grid>
     );
   }

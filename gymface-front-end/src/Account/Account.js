@@ -43,7 +43,7 @@ class Account extends Component {
   }
 
 
-  handleInputChange= (event) => {
+  handleInputChange = (event) => {
     const target = event.target;
     const value = target.value
     const name = target.name;
@@ -51,9 +51,8 @@ class Account extends Component {
     this.setState({
       [name]: value
     });
-
-}
   }
+
   updateInfo = (user) => {
     fetch(`http://localhost:3001/user_klasses/1`,
     { method: "PATCH",
@@ -68,37 +67,36 @@ class Account extends Component {
        console.log(data)
        this.handleEditInfo()
      })
+   }
 
-     generateBuffer = () => {
-       var rawdata = this.state.capturedImage;
-       var matches = rawdata.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/);
-       var type = matches[1]; // e.g. 'image/jpeg'
-       var buffer = new Buffer(matches[2], 'base64');
-       // ^^ img content converted to binary buffer stream
-       console.log(AWS_ID)
-       var params = {
-         SourceImage: {
-          S3Object: {
-           Bucket: "gymface-faces",
-           Name: "user-1.jpg"
-          }
-         },
-         TargetImage: {
-           Bytes: buffer
-         }
+   generateBuffer = () => {
+     var rawdata = this.state.capturedImage;
+     var matches = rawdata.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/);
+     var type = matches[1]; // e.g. 'image/jpeg'
+     var buffer = new Buffer(matches[2], 'base64');
+     // ^^ img content converted to binary buffer stream
+     console.log(AWS_ID)
+     var params = {
+       SourceImage: {
+        S3Object: {
+         Bucket: "gymface-faces",
+         Name: "user-1.jpg"
         }
+       },
+       TargetImage: {
+         Bytes: buffer
+       }
+      }
 
-        rekognition.compareFaces(params, function(err, data) {
-          if (err) {
-            console.log("error", err, err.stack)
-          } else {
-            console.log("not error", data)
-          }
-        })
+      rekognition.compareFaces(params, function(err, data) {
+        if (err) {
+          console.log("error", err, err.stack)
+        } else {
+          console.log("not error", data)
+        }
+      })
+    }
 
-
-
-  }
 
   render() {
     return (

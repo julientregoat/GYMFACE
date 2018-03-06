@@ -63,13 +63,13 @@ class LoginContainer extends Component {
   render() {
     return (
       <Grid centered columns={2}>
-        <h1> Login </h1>
+        {this.props.currentUser ? <h1> Welcome, {this.props.currentUser.name}!</h1> : <React.Fragment> <h1> Login </h1>
         <Grid.Row>
           <WebcamContainer webcamCallback={this.matchFace}/>
         </Grid.Row>
         <Grid.Row>
           <LoginForm loginCallback={this.handleLogin}/>
-        </Grid.Row>
+        </Grid.Row></React.Fragment>}
       </Grid>
     );
   }

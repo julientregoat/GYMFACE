@@ -17,9 +17,7 @@ class App extends Component {
     currentUser: null
   }
 
-  // perhaps should manage class lists in state up here? this would allow us to
-  // fetch the current day's classes once the user loads the app and save time.
-  // make higher order component for auth
+  // TODO - add loading for classes, string parse the dates
 
   setUser = (user) => {
     this.setState({currentUser: user})
@@ -38,7 +36,8 @@ class App extends Component {
             <Grid.Row>
               <div className="page">
                 <Switch>
-                  <Route exact path="/login" render={()=> <LoginContainer setUser={this.setUser}/>} />
+                  <Route exact path="/login" render={()=> <LoginContainer setUser={this.setUser}
+                  currentUser={this.state.currentUser}/>} />
                   <Route exact path="/signup" component={SignUpContainer} />
                   {this.state.currentUser ?
                     <React.Fragment>

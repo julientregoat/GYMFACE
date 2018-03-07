@@ -13,7 +13,7 @@ class CalendarContainer extends React.Component {
   }
 
   fetchUserCalendar(){
-    fetch('http://localhost:3001/users/1')
+    fetch(`http://localhost:3001/users/${this.props.currentUser.id}`)
     .then(res => res.json()).then(user => this.setState({classes: user.klasses}))
   }
 
@@ -27,11 +27,10 @@ class CalendarContainer extends React.Component {
     { method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(
-        {klass_id:clas.id, user_id:1}
+        {klass_id: clas.id, user_id: this.props.currentUser.id}
       )
-    }
-    ).then(response => response.json())
-     .then(console.log)
+    }).then(response => response.json())
+     .then(json => console.log(json))
   }
 
   dropClass = (clas) => {
@@ -39,7 +38,7 @@ class CalendarContainer extends React.Component {
     { method: "DELETE",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(
-        {klass_id:clas.id, user_id:1}
+        {klass_id:clas.id, user_id:this.props.currentUser.id}
       )
     }
     ).then(response => response.json())

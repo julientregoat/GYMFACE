@@ -1,10 +1,10 @@
 import React from 'react';
 import CalendarContainer from "./CalendarContainer"
 
-const Dashboard = () => (
+const Dashboard = (props) => (
   <React.Fragment>
 
-    <CalendarContainer className="dashboard-cal"/>
+    <CalendarContainer currentUser={props.currentUser} className="dashboard-cal"/>
 
   </React.Fragment>
 );

@@ -46,7 +46,7 @@ class App extends Component {
                   <Route exact path="/signup" render={()=> <SignUpContainer setUser={this.setUser} currentUser={this.state.currentUser}/>} />}
                   {this.state.currentUser ?
                     <React.Fragment>
-                    <Route exact path="/" component={Dashboard} />
+                    <Route exact path="/" render={() => <Dashboard currentUser={this.state.currentUser}/>} />
                     <Route exact path="/classes" component={Classes} />
                     <Route exact path="/account" component={Account} />
                     </React.Fragment>

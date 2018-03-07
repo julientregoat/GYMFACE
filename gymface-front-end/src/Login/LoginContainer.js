@@ -7,12 +7,11 @@ import { AWS_ID, AWS_KEY } from '../env.js'
 import { Grid } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
-var AWS = require('aws-sdk');
-var myConfig = new AWS.Config({
+let AWS = require('aws-sdk');
+let myConfig = new AWS.Config({
   accessKeyId: AWS_ID, secretAccessKey: AWS_KEY, region: 'us-east-2'
 })
-var s3 = new AWS.S3(myConfig);
-var rekognition = new AWS.Rekognition(myConfig);
+let rekognition = new AWS.Rekognition(myConfig);
 
 class LoginContainer extends Component {
 

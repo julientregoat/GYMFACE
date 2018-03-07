@@ -40,10 +40,7 @@ class Classes extends Component {
       )
     }
     ).then(response => response.json())
-     .then(json => {
-       if (json.error){
-         alert("You already have a reservation for this class.")
-       }
+     .then(json => { console.log(json)
      })
   }
 
@@ -86,7 +83,7 @@ class Classes extends Component {
 
         <Grid.Row className="calendarItem" >
           <span>View classes for another date:</span>
-          <input type="date" onChange={this.handleCalendar}/>
+          <input className="button" type="date" onChange={this.handleCalendar}/>
         </Grid.Row>
 
         <CalendarItem classInfo={this.columnHeaders()} display={true}/>

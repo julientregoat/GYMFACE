@@ -40,7 +40,11 @@ class Classes extends Component {
       )
     }
     ).then(response => response.json())
-     .then(console.log)
+     .then(json => {
+       if (json.error){
+         alert("You already have a reservation for this class.")
+       }
+     })
   }
 
   dropClass = (clas) => {

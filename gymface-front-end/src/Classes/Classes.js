@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import CalendarItem from '../Dashboard/CalendarItem'
 
-import { Grid } from 'semantic-ui-react'
+import { Grid, Loader } from 'semantic-ui-react'
 
 class Classes extends Component {
 
@@ -86,8 +86,7 @@ class Classes extends Component {
         </Grid.Row>
 
         <CalendarItem classInfo={this.columnHeaders()} display={true}/>
-
-        {this.state.classes.map(clas => <CalendarItem key={clas.id} classInfo={clas} addClass={this.addClass} dropClass={this.dropClass}/>)}
+        {this.state.classes.length === 0 ? <Loader active size="massive-" id="classLoad">Loading Classes</Loader> : this.state.classes.map(clas => <CalendarItem key={clas.id} classInfo={clas} addClass={this.addClass} dropClass={this.dropClass}/>)}
 
       </Grid>
     );

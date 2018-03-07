@@ -3,14 +3,14 @@ import CLUBS from '../ClubData'
 
 const SignUpForm = (props) => (
   <form onSubmit={props.submit}>
-    <input type="text" name="name"placeholder="Name" /><br/>
-    <input type="text" name="email" placeholder="Email" /><br/>
-    <select name="club" placeholder="Pick your club location...">
+    <input type="text" className="button" name="name"placeholder="Name" /><br/>
+    <input type="text" className="button" name="email" placeholder="Email" /><br/>
+    <select name="club" className="button" placeholder="Pick your club location...">
       {Object.keys(CLUBS).map(id => <option value={id} key={id}>{CLUBS[id]}</option>)}
     </select><br/>
-    <input type="text" name="username"placeholder="Username" /><br/>
-    <input type="password" name="password" placeholder="Password" /><br/>
-    <input type="submit" value="Sign Up" /><br/>
+    <input type="text" className="button" name="username"placeholder="Username" /><br/>
+    <input type="password" className="button" name="password" placeholder="Password" /><br/>
+    <input type="submit" className="button" value="Sign Up" /><br/>
   </form>
 );
 

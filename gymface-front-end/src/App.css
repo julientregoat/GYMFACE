@@ -15,6 +15,10 @@
   width: 100%;
 }
 
+#classLoad {
+  margin-top: 200px;
+}
+
 .calendarItem {
   justify-content: space-between !important;
   max-width: 80% !important;

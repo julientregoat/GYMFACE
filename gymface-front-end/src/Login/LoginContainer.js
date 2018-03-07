@@ -5,7 +5,7 @@ import WebcamContainer from '../WebcamContainer';
 
 import { AWS_ID, AWS_KEY } from '../env.js'
 import { Grid } from 'semantic-ui-react';
-import { Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 var AWS = require('aws-sdk');
 var myConfig = new AWS.Config({
@@ -70,7 +70,9 @@ class LoginContainer extends Component {
         </Grid.Row>
         <Grid.Row>
           <LoginForm loginCallback={this.handleLogin}/>
-        </Grid.Row></React.Fragment>}
+        </Grid.Row>
+          <Link to="/signup" className="button">Or Sign Up!</Link>
+        </React.Fragment>}
       </Grid>
     );
   }

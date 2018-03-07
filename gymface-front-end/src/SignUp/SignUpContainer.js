@@ -4,18 +4,18 @@ import SignUpForm from './SignUpForm'
 import WebcamContainer from '../WebcamContainer'
 import { AWS_ID, AWS_KEY } from '../env.js'
 
-var AWS = require('aws-sdk');
-var myConfig = new AWS.Config({
+let AWS = require('aws-sdk');
+let myConfig = new AWS.Config({
   accessKeyId: AWS_ID, secretAccessKey: AWS_KEY, region: 'us-east-2'
 })
-var s3 = new AWS.S3(myConfig);
-var rekognition = new AWS.Rekognition(myConfig);
+let rekognition = new AWS.Rekognition(myConfig);
 
 class SignUpContainer extends Component {
 
   state = {
     capturedFaceId: null,
-    capturePreview: null
+    capturedPreview: null,
+    storedBuffer: null
   }
 
   signUp = (event) => {
@@ -26,9 +26,27 @@ class SignUpContainer extends Component {
     let username = event.target.username.value
     let password = event.target.password.value
 
+    let params = {
+      CollectionId: "gymface",
+      Image: {
+       Bytes: this.state.storedBuffer
+      }
+    };
+
+    rekognition.indexFaces(params, (err, data) => {
+      if (err) {
+       alert('Try again!')
+      } else {
+       this.setState({
+         capturedFaceId: data.FaceRecords[0].Face.FaceId
+       })
+      }
+    })
+
     if (this.state.capturedFaceId === null){
       return alert("Take a photo to complete the form.")
     }
+
     fetch('http://localhost:3001/users', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
@@ -51,25 +69,9 @@ class SignUpContainer extends Component {
     })
   }
 
-  indexFace = (buffer, base64) => {
-    var params = {
-      CollectionId: "gymface",
-      Image: {
-       Bytes: buffer
-      }
-    };
-
-    rekognition.indexFaces(params, (err, data) => {
-      if (err) {
-       alert('Try again!')
-      } else {
-       this.setState({
-         capturedFaceId: data.FaceRecords[0].Face.FaceId,
-         capturePreview: base64
-       })
-
-      }
-    })
+  capturePreview = (buffer, base64) => {
+    console.log("hi")
+    this.setState({capturedPreview: base64, storedBuffer: buffer})
   }
 
   render() {
@@ -80,8 +82,8 @@ class SignUpContainer extends Component {
           <React.Fragment>
             <h1> Sign Up! </h1>
             <Grid.Row>
-              <WebcamContainer webcamCallback={this.indexFace}/>
-              {this.state.capturePreview === null ? <div/> : <img src={this.state.capturePreview} alt="Profile Pic Preview" height="300"/>}
+              <WebcamContainer webcamCallback={this.capturePreview}/>
+              {this.state.capturedPreview === null ? <div/> : <img src={this.state.capturedPreview} alt="Profile Pic Preview" height="300"/>}
             </Grid.Row>
             <Grid.Row><SignUpForm submit={this.signUp}/></Grid.Row>
           </React.Fragment>

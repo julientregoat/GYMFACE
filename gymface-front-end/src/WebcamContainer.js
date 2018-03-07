@@ -17,13 +17,13 @@ class WebcamContainer extends Component {
     var type = matches[1]; // e.g. 'image/jpeg'
     var buffer = new Buffer(matches[2], 'base64');
     // ^^ img content converted to binary buffer stream
-    this.props.webcamCallback(buffer)
+    this.props.webcamCallback(buffer, base64img)
   }
 
 render() {
     return (
-      <div onClick={this.capture}>
-        <Webcam audio={false} ref={this.setRef} screenshotFormat="image/jpeg" height="300"/>
+      <div>
+        <Webcam audio={false} ref={this.setRef} screenshotFormat="image/jpeg" height="300"/><br/>
         <button onClick={this.capture}>Capture Image</button>
       </div>
     );

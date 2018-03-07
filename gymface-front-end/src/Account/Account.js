@@ -39,15 +39,6 @@ class Account extends Component {
     .then(user => this.setState({user: user}))
   }
 
-  setRef = (webcam) => {
-    this.webcam = webcam;
-  }
-
-  capture = () => {
-    const imageSrc = this.webcam.getScreenshot();
-    this.setState({capturedImage: imageSrc}, () => this.generateBuffer())
-  };
-
   handleEditInfo = () => {
     this.setState({edit:!this.state.edit})
   }
@@ -67,35 +58,6 @@ class Account extends Component {
       )
     }).then(response => response.json())
       .then(data => this.handleEditInfo())
-  }
-
-
-     generateBuffer = () => {
-       var rawdata = this.state.capturedImage;
-       var matches = rawdata.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/);
-       var type = matches[1]; // e.g. 'image/jpeg'
-       var buffer = new Buffer(matches[2], 'base64');
-       // ^^ img content converted to binary buffer stream
-       console.log(AWS_ID)
-       var params = {
-         SourceImage: {
-          S3Object: {
-           Bucket: "gymface-faces",
-           Name: "user-1.jpg"
-          }
-         },
-         TargetImage: {
-           Bytes: buffer
-         }
-        }
-
-        rekognition.compareFaces(params, function(err, data) {
-          if (err) {
-            console.log("error", err, err.stack)
-          } else {
-            console.log("not error", data)
-          }
-        })
   }
 
   render() {

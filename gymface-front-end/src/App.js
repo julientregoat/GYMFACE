@@ -23,6 +23,10 @@ class App extends Component {
     this.setState({currentUser: user})
   }
 
+  logout = () => {
+    this.setState({currentUser: null})
+  }
+
   render() {
     return (
       <Grid centered id="app">
@@ -30,7 +34,7 @@ class App extends Component {
           <React.Fragment>
 
             <Grid.Row>
-              <Header />
+              <Header logout={this.logout}/>
             </Grid.Row>
 
             <Grid.Row>
@@ -38,7 +42,7 @@ class App extends Component {
                 <Switch>
                   <Route exact path="/login" render={()=> <LoginContainer setUser={this.setUser}
                   currentUser={this.state.currentUser}/>} />
-                  <Route exact path="/signup" component={SignUpContainer} />
+                  <Route exact path="/signup" render={()=> <SignUpContainer setUser={this.setUser} currentUser={this.state.currentUser}/>} />
                   {this.state.currentUser ?
                     <React.Fragment>
                     <Route exact path="/" component={Dashboard} />

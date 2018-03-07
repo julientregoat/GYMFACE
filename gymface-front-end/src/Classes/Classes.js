@@ -68,8 +68,6 @@ class Classes extends Component {
     this.fetchClasses(event.target.value)
   }
 
-  // need to manage adding classes
-
   // loading screen for when class dates are loading?
 
   // display date is one day off. something to do with

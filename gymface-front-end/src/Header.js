@@ -8,7 +8,7 @@ const Header = (props) => (
       <Link to="/"><Menu.Item content="Dashboard"/></Link>
       <Link to="/classes"><Menu.Item content="View Classes"/></Link>
       <Menu.Item position="right" content={<Link to="/account">My Account</Link>}/>
-      <Menu.Item onClick={props.logout} content="Logout"/>
+      {props.currentUser ? <Menu.Item onClick={props.logout} content="Logout"/> : null}
     </Menu>
 
   </div>

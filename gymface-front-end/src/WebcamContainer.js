@@ -22,15 +22,9 @@ class WebcamContainer extends Component {
 
 render() {
     return (
-<<<<<<< HEAD
-      <div onClick={this.capture}>
-        <Webcam audio={false} ref={this.setRef} screenshotFormat="image/jpeg" height="300"/>
-        <button className="button" onClick={this.capture}>Capture Image</button>
-=======
       <div>
         <Webcam audio={false} ref={this.setRef} screenshotFormat="image/jpeg" height="300"/><br/>
-        <button onClick={this.capture}>Capture Image</button>
->>>>>>> 1ba19b15e1ab8dbe0c7c24b00e5e63d65f41cb8d
+        <button className="button" onClick={this.capture}>Capture Image</button>
       </div>
     );
   }

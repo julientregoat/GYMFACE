@@ -1,6 +1,12 @@
 class UsersController < ApplicationController
 
   def create
+    new_user = User.new(user_params)
+    if new_user.save
+      render json: new_user, status: 201
+    else
+      render json: {error: "Your email or username is already taken."}, status: 400
+    end
   end
 
   def show
@@ -10,7 +16,7 @@ class UsersController < ApplicationController
 
   def update
     user = User.find(params[:id])
-    user.update(name:params[:name],username:params[:username],email:params[:email],home_club_id:params[:home_club_id])
+    user.update(name:params[:name],username:params[:username],email: params[:email],home_club_id: params[:home_club_id])
     if user.save
       render json: {message: "Success!"}, status: 200
     else
@@ -37,6 +43,10 @@ class UsersController < ApplicationController
   end
 
   private
+
+  def user_params
+    params.require(:user).permit(:name, :email, :home_club_id, :username, :password, :face_id)
+  end
 
   def login_params
     params.require(:user).permit(:username, :password)

@@ -35,6 +35,7 @@ class LoginContainer extends Component {
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({face_info: data})
           }).then(res => res.json()).then(json => {
+            console.log(json, buffer)
             alert(`Welcome, ${json.name}`)
             this.props.setUser(json)
           })

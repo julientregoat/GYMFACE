@@ -1,15 +1,16 @@
 import React from 'react';
+import CLUBS from '../ClubData'
 
-// turn home club ID input to a dropdown select
-
-const SignUpForm = () => (
-  <form>
-    <input type="text" placeholder="Name" />
-    <input type="text" placeholder="Email" />
-    <input type="text" placeholder="Home Club ID" />
-    <input type="text" placeholder="Username" />
-    <input type="password" placeholder="Password" />
-    <input type="submit" value="Sign Up" />
+const SignUpForm = (props) => (
+  <form onSubmit={props.submit}>
+    <input type="text" name="name"placeholder="Name" /><br/>
+    <input type="text" name="email" placeholder="Email" /><br/>
+    <select name="club" placeholder="Pick your club location...">
+      {Object.keys(CLUBS).map(id => <option value={id} key={id}>{CLUBS[id]}</option>)}
+    </select><br/>
+    <input type="text" name="username"placeholder="Username" /><br/>
+    <input type="password" name="password" placeholder="Password" /><br/>
+    <input type="submit" value="Sign Up" /><br/>
   </form>
 );
 

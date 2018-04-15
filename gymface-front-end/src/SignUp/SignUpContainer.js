@@ -3,6 +3,7 @@ import { Grid } from 'semantic-ui-react'
 import SignUpForm from './SignUpForm'
 import WebcamContainer from '../WebcamContainer'
 import { AWS_ID, AWS_KEY } from '../env.js'
+import { Redirect } from 'react-router-dom'
 
 let AWS = require('aws-sdk');
 let myConfig = new AWS.Config({
@@ -75,10 +76,11 @@ class SignUpContainer extends Component {
   }
 
   render() {
+    console.log(this.props.currentUser)
     return (
       <Grid centered columns={2} className="page">
         { this.props.currentUser ?
-          <h1> Welcome, {this.props.currentUser.name} </h1> :
+          <Redirect to="/login" /> :
           <React.Fragment>
             <h1> Sign Up! </h1>
             <Grid.Row>

@@ -56,15 +56,6 @@ class Classes extends Component {
      .then(console.log)
   }
 
-  columnHeaders(){
-    return { name: <h3>Name</h3>,
-      instructor: <h3>Instructor</h3>,
-      start_time: <h3>Start Time</h3>,
-      end_time: <h3>End Time</h3>,
-      joined: false
-    }
-  }
-
   handleCalendar = (event) => {
     this.fetchClasses(event.target.value)
   }
@@ -75,8 +66,9 @@ class Classes extends Component {
   // javascript timezone. if I use .getUTCDate(), it returns the right one.
 
   render() {
+    console.log(this.state.classes)
     return (
-      <Grid className="dashboard-cal page" centered columns={5}>
+      <Grid className="dashboard-cal page" columns={3}>
         <Grid.Row>
         <h1> Viewing All Classes for {this.state.viewDate}</h1>
         </Grid.Row>
@@ -86,7 +78,14 @@ class Classes extends Component {
           <input className="button" type="date" onChange={this.handleCalendar}/>
         </Grid.Row>
 
-        <CalendarItem classInfo={this.columnHeaders()} display={true}/>
+        <Grid.Row className="calendarHeader" centered>
+          <span className="header-item"><h3>Name</h3></span>
+          <span className="header-item"><h3>Instructor</h3></span>
+          <span className="header-item"><h3>Start Time</h3></span>
+          <span className="header-item"><h3>End Time</h3></span>
+          <span className="header-item"/>
+        </Grid.Row>
+
         {this.state.classes.length === 0 ? <Loader active size="massive" id="classLoad">Loading Classes</Loader> : this.state.classes.map(clas => <CalendarItem key={clas.id} classInfo={clas} addClass={this.addClass} dropClass={this.dropClass}/>)}
 
       </Grid>
